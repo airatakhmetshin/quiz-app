@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Start page{% endblock %}
+
+{% block body %}
+    <h1># Start page</h1>
+
+    <ul>
+        {% if progress.progress < progress.total %}
+        <li>
+            <a href="{{ path('app_quiz_next') }}">Continue session ({{ progress.progress }} of {{ progress.total }})</a>
+        </li>
+        {% endif %}
+        <li>
+            <a href="{{ path('app_quiz_new') }}">New session</a>
+        </li>
+    </ul>
+{% endblock %}

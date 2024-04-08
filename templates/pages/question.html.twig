@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question page{% endblock %}
+
+{% block body %}
+    <h1># Question page</h1>
+
+    <h3>{{ question.text }}?</h3>
+
+    <form action="{{ path('app_quiz_submit') }}" method="POST">
+        <ul>
+            {% for answer in answers %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="answer_ids[]" value="{{ answer.id }}" />
+                        {{ answer.text }}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <input type="hidden" name="question_id" value="{{ question.id }}" />
+
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

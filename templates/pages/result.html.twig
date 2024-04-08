@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Result page{% endblock %}
+
+{% block body %}
+    <h1># Result page</h1>
+
+    <table style="border: 1px solid black">
+        <thead>
+            <tr>
+                <th style="color: green">correct</th>
+                <th style="color: red">incorrect</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="vertical-align: top">
+                <td style="border: 1px solid black">
+                    <ul>
+                    {% for i in result %}
+                        {% if i.status.value == 'success' %}
+                        <li>№{{ i.questionID }} {{ i.questionText }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </td>
+                <td style="border: 1px solid black">
+                    <ul>
+                    {% for i in result %}
+                        {% if i.status.value == 'failed' %}
+                        <li>№{{ i.questionID }} {{ i.questionText }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
