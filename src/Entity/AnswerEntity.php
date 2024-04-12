@@ -22,7 +22,7 @@ class AnswerEntity
 
     #[ORM\ManyToOne(inversedBy: 'answers')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?QuestionEntity $question = null;
+    private ?QuestionEntity $Question = null;
 
     public function getId(): ?int
     {
@@ -55,12 +55,12 @@ class AnswerEntity
 
     public function getQuestion(): ?QuestionEntity
     {
-        return $this->question;
+        return $this->Question;
     }
 
-    public function setQuestion(?QuestionEntity $question): static
+    public function setQuestion(?QuestionEntity $Question): static
     {
-        $this->question = $question;
+        $this->Question = $Question;
 
         return $this;
     }
