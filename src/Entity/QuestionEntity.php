@@ -22,7 +22,7 @@ class QuestionEntity
     /**
      * @var Collection<AnswerEntity>
      */
-    #[ORM\OneToMany(targetEntity: AnswerEntity::class, mappedBy: 'Question')]
+    #[ORM\OneToMany(targetEntity: AnswerEntity::class, mappedBy: 'question')]
     private Collection $answers;
 
     public function __construct()
