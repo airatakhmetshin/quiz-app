@@ -13,16 +13,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class QuestionService
 {
-    protected AnswerRepository $answerRepository;
-    protected QuestionResultRepository $questionResultRepository;
-    protected QuestionRepository $questionRepository;
-
     public function __construct(
-        protected EntityManagerInterface $em,
+        protected EntityManagerInterface   $em,
+        protected AnswerRepository         $answerRepository,
+        protected QuestionRepository       $questionRepository,
+        protected QuestionResultRepository $questionResultRepository,
     ) {
-        $this->answerRepository         = $this->em->getRepository(AnswerEntity::class);
-        $this->questionRepository       = $this->em->getRepository(QuestionEntity::class);
-        $this->questionResultRepository = $this->em->getRepository(QuestionResultEntity::class);
     }
 
     /**
