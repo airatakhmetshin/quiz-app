@@ -22,7 +22,7 @@ services:
     environment:
       APP_ENV: "dev"
       APP_DEBUG: "1"
-      APP_SECRET: "8585b4f288dc86d5a7d9907d3fbeed45"
+      APP_SECRET: "<secret>"
       DATABASE_URL: "pgsql://app:app@quiz_postgres/app"
 
   quiz_postgres:
