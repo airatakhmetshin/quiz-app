@@ -2,13 +2,11 @@
 
 namespace App\Controller;
 
-use App\Dto\Http\SubmitQuestionRequest;
 use App\Dto\SubmitQuestionDto;
 use App\Service\QuestionService;
 use App\SessionStorage\QuizSession;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\{Request, Response};
-use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 class QuizController extends AbstractController
@@ -46,12 +44,11 @@ class QuizController extends AbstractController
 
     #[Route('/question', name: 'app_quiz_submit', methods: ['POST'])]
     public function submit(
-        #[MapRequestPayload]
-        SubmitQuestionRequest $submitQuestionRequest,
-        QuizSession           $quizSession,
+        Request     $request,
+        QuizSession $quizSession,
     ): Response {
-        $questionID = (int) $submitQuestionRequest->question_id;
-        $answerIDs  = array_map(static fn(string $id): int => (int) $id, $submitQuestionRequest->answer_ids);
+        $questionID = (int) $request->get('question_id');
+        $answerIDs  = array_map(static fn(string $id): int => (int) $id, $request->get('answer_ids', []));
 
         $this->questionService->submit(new SubmitQuestionDto(
             quizSession: $quizSession,
