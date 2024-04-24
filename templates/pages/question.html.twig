@@ -3,24 +3,20 @@
 {% block title %}Question page{% endblock %}
 
 {% block body %}
-    <h1># Question page</h1>
-
+<form action="{{ path('app_quiz_submit') }}" method="POST">
     <h3>{{ question.text }}?</h3>
+    <div class="mb-3">
+        {% for answer in answers %}
+        <div class="form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="answer_ids[]" value="{{ answer.id }}" />
+                {{ answer.text }}
+            </label>
+        </div>
+        {% endfor %}
+    </div>
 
-    <form action="{{ path('app_quiz_submit') }}" method="POST">
-        <ul>
-            {% for answer in answers %}
-                <li>
-                    <label>
-                        <input type="checkbox" name="answer_ids[]" value="{{ answer.id }}" />
-                        {{ answer.text }}
-                    </label>
-                </li>
-            {% endfor %}
-        </ul>
-
-        <input type="hidden" name="question_id" value="{{ question.id }}" />
-
-        <button type="submit">Submit</button>
-    </form>
+    <input type="hidden" name="question_id" value="{{ question.id }}" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}
