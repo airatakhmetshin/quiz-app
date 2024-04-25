@@ -7,9 +7,9 @@ actor: FunctionalTester
 modules:
     enabled:
         - Asserts
-        - Symfony:
-              app_path: 'src'
-              environment: 'test'
+#        - Symfony:
+#              app_path: 'src'
+#              environment: 'test'
 #        - Doctrine:
 #              depends: Symfony
 #              cleanup: true
