@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Dto\{ResultDto, SessionProgressDto, SubmitQuestionDto};
 use App\Entity\{AnswerEntity, QuestionEntity, QuestionResultEntity};
+use App\Enum\QuestionResultStatusEnum;
 use App\Repository\{AnswerRepository, QuestionRepository, QuestionResultRepository};
 use App\SessionStorage\QuizSession;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,16 +55,51 @@ class QuestionService
         $newResult->setQuestionId($questionID);
         $newResult->setAnswerIds($answerIDs);
 
-        $status = $this->answerRepository
-            ->successOrFailed(
-                questionID: $questionID,
-                answerIDs: $answerIDs,
-            );
+        $status = $this->successOrFailed(
+            questionID: $questionID,
+            answerIDs: $answerIDs,
+        );
 
         $newResult->setStatus($status);
 
         $this->em->persist($newResult);
         $this->em->flush();
+    }
+
+    protected function successOrFailed(int $questionID, array $answerIDs): QuestionResultStatusEnum
+    {
+        $answers = $this->answerRepository->findBy(['question' => $questionID]);
+
+        $rows = array_map(static fn(AnswerEntity $answer): array => [
+            'id'          => $answer->getId(),
+            'is_correct'  => $answer->isCorrect(),
+            'is_selected' => in_array($answer->getId(), $answerIDs, true),
+        ], $answers);
+
+        $correctedCount = count(array_filter($rows, static fn(array $row) => $row['is_correct']));
+        $successCount   = 0;
+
+        foreach ($rows as $row) {
+            // is_correct === true
+            if ($row['is_correct']) {
+                if ($row['is_selected']) {
+                    $successCount++;
+                }
+            // is_correct === false
+            } else {
+                if ($row['is_selected']) {
+                    $successCount = -1;
+
+                    break;
+                }
+            }
+        }
+
+        return match (true) {
+            $correctedCount > 0 && $successCount > 0     => QuestionResultStatusEnum::SUCCESS,
+            $correctedCount === 0 && $successCount === 0 => QuestionResultStatusEnum::SUCCESS,
+            default                                      => QuestionResultStatusEnum::FAILED,
+        };
     }
 
     public function hasQuestions(QuizSession $quizSession): bool
