@@ -64,7 +64,7 @@ select qr.id, qr.question_id, qr.status, q.text
 from question_result qr
 left join question q on qr.question_id = q.id
 where qr.session_id = :session_id
-order by qr.question_id asc
+order by qr.id asc
 SQL;
 
         $rows = $this->getEntityManager()
