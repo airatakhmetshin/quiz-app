@@ -20,7 +20,7 @@ class SuccessOrFailedTest extends \Codeception\Test\Unit
     protected QuestionRepository $questionRepository;
     protected QuestionResultRepository $questionResultRepository;
 
-    protected function _before()
+    protected function _before(): void
     {
         $this->em = $this->makeEmpty(EntityManagerInterface::class);
         $this->questionRepository = $this->make(QuestionRepository::class);
