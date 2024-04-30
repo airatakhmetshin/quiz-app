@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class QuestionResultEntity
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue('SEQUENCE')]
     #[ORM\Column]
     private ?int $id = null;
 

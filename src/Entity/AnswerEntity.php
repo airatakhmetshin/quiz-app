@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AnswerEntity
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue('SEQUENCE')]
     #[ORM\Column]
     private ?int $id = null;
 
