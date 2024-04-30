@@ -1,0 +1,11 @@
+actor: IntegrationTester
+suite_namespace: App\Tests\Integration
+modules:
+    enabled:
+        - Asserts
+        - Symfony:
+            app_path: 'src'
+            environment: 'test'
+            part: services
+        - Doctrine:
+            depends: Symfony
