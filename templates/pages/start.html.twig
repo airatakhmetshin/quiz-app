@@ -4,7 +4,7 @@
 
 {% block body %}
 <ul class="list-unstyled">
-    {% if progress.progress < progress.total %}
+    {% if progress.progress < progress.total or progress.progress == 0 %}
     <li>
         <a href="{{ path('app_quiz_next') }}">Continue session ({{ progress.progress }} of {{ progress.total }})</a>
     </li>
