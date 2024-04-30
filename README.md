@@ -21,6 +21,12 @@ php bin/console doctrine:fixtures:load
 
 Open: http://localhost:80
 
+### Tests
+
+```shell
+php vendor/bin/codecept run --steps
+```
+
 ### Schema
 
 ![schema](docs/schema.png)
